@@ -74,4 +74,121 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+const readline = require('readline-sync');
+
+function toNumber(input) {
+	const n = Number(input);
+	return Number.isFinite(n) ? n : null;
+}
+
+function add(a, b) {
+	return a + b;
+}
+
+function subtract(a, b) {
+	return a - b;
+}
+
+function multiply(a, b) {
+	return a * b;
+}
+
+function divide(a, b) {
+	if (b === 0) return null; // signal division by zero
+	return a / b;
+}
+
+function modulus(a, b) {
+	if (b === 0) return null;
+	return a % b;
+}
+
+function exponentiate(a, b) {
+	return a ** b;
+}
+
+function promptForNumber(promptText) {
+	const ans = readline.question(promptText);
+	const n = toNumber(ans);
+	if (n === null) {
+		console.log('Invalid number.');
+		return null;
+	}
+	return n;
+}
+
+function showMenu() {
+	console.log('\n============================');
+	console.log('     SIMPLE CALCULATOR');
+	console.log('============================');
+	console.log('1. Addition');
+	console.log('2. Subtraction');
+	console.log('3. Multiplication');
+	console.log('4. Division');
+	console.log('5. Modulus');
+	console.log('6. Exponentiation');
+	console.log('7. Quit');
+}
+
+// Main loop
+while (true) {
+	showMenu();
+	const choice = readline.question('Select an operation (1-7): ').trim();
+	if (choice === '7') {
+		console.log('Goodbye!');
+		break;
+	}
+
+	const a = promptForNumber('Enter first number : ');
+	if (a === null) continue;
+	const b = promptForNumber('Enter second number: ');
+	if (b === null) continue;
+
+	let result;
+	let opSymbol = '';
+
+	switch (choice) {
+		case '1':
+			result = add(a, b);
+			opSymbol = '+';
+			break;
+		case '2':
+			result = subtract(a, b);
+			opSymbol = '-';
+			break;
+		case '3':
+			result = multiply(a, b);
+			opSymbol = '*';
+			break;
+		case '4':
+			result = divide(a, b);
+			opSymbol = '/';
+			if (result === null) {
+				console.log('Error: Cannot divide by zero.');
+				continue;
+			}
+			break;
+		case '5':
+			result = modulus(a, b);
+			opSymbol = '%';
+			if (result === null) {
+				console.log('Error: Cannot modulus by zero.');
+				continue;
+			}
+			break;
+		case '6':
+			result = exponentiate(a, b);
+			opSymbol = '**';
+			break;
+		default:
+			console.log('Invalid choice. Please select a number between 1 and 7.');
+			continue;
+	}
+
+	// Display result to 2 decimal places
+	const display = typeof result === 'number' ? result.toFixed(2) : result;
+	console.log(`Result: ${a} ${opSymbol} ${b} = ${display}`);
+}
+
+
 
