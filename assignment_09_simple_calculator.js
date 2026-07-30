@@ -130,7 +130,6 @@ function showMenu() {
 	console.log('7. Quit');
 }
 
-// Main loop
 while (true) {
 	showMenu();
 	const choice = readline.question('Select an operation (1-7): ').trim();
