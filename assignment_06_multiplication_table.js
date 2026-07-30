@@ -59,4 +59,57 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+const readline = require('readline-sync');
+
+function isPositiveInteger(value) {
+	return Number.isInteger(value) && value > 0;
+}
+
+function generateSingleTable(n) {
+	console.log(`\nMultiplication Table for ${n}:`);
+	for (let i = 1; i <= 12; i++) {
+		console.log(`${n}  x  ${i}  =  ${n * i}`);
+	}
+}
+
+function generateTablesUpToN(N) {
+	if (!isPositiveInteger(N)) {
+		console.log('Error: N must be a positive integer.');
+		return;
+	}
+
+	for (let num = 1; num <= N; num++) {
+		generateSingleTable(num);
+		if (num !== N) console.log('---------------------------');
+	}
+}
+
+function promptForPositiveInteger(promptText) {
+	const answer = readline.question(promptText);
+	const parsed = Number(answer);
+	if (!Number.isFinite(parsed) || !Number.isInteger(parsed) || parsed <= 0) {
+		return null;
+	}
+	return parsed;
+}
+
+// Main program flow
+const single = promptForPositiveInteger('Enter a number for Part A (single table): ');
+if (single === null) {
+	console.log('Invalid input. Please enter a positive integer.');
+	process.exit(1);
+}
+generateSingleTable(single);
+
+// Ask whether to run Part B
+const runB = readline.question('\nDo you want to generate tables from 1 to N (Part B)? (y/n): ');
+if (runB.trim().toLowerCase() === 'y') {
+	const N = promptForPositiveInteger('Enter N (positive integer): ');
+	if (N === null) {
+		console.log('Invalid input. N must be a positive integer.');
+		process.exit(1);
+	}
+	generateTablesUpToN(N);
+}
+
 
